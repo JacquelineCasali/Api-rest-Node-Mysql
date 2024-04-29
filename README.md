@@ -1,10 +1,11 @@
 ## Projeto é uma Api Rest de Produtos
 
-
+## Imagem do Projeto 
+![2024-04-29_065539](https://github.com/JacquelineCasali/Api-rest-Node-Mysql/assets/103325619/804310c8-0423-4473-8563-c4acfd368ab5)
 COMO RODAR O PROJETO BAIXADO
 Instalar todas as dependencias indicada pelo package.json
-### npm install
 
+### npm install
 Criar a base de dados "users" no MySQL
 Alterar as credencias do banco de dados no arquivo ".env"
 
