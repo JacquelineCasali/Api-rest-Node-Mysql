@@ -1,7 +1,12 @@
 ## Projeto é uma Api Rest de Produtos
 
 ## Imagem do Projeto 
-![2024-04-29_065539](https://github.com/JacquelineCasali/Api-rest-Node-Mysql/assets/103325619/804310c8-0423-4473-8563-c4acfd368ab5)
+<!-- ![2024-04-29_065539](https://github.com/JacquelineCasali/Api-rest-Node-Mysql/assets/103325619/804310c8-0423-4473-8563-c4acfd368ab5) -->
+
+ <p align="center">
+  <img src="./2024-04-29_065539.png" width="600px">
+</p>
+
 COMO RODAR O PROJETO BAIXADO
 Instalar todas as dependencias indicada pelo package.json
 
