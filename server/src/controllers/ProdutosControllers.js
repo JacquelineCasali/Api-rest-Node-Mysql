@@ -11,8 +11,9 @@ const produtosControllers = {
        try{
         const {lojaId}=req.params;
         const user = await db.Lojas.findByPk( lojaId,{
-          //incluir associçao 
-          include:{association:'loja'}
+            //incluir associçao 
+          include:{association:'loja'},
+          
         } );
 
         return res.json(user);
