@@ -11,10 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+     // hasmany  um para muitos 
+     //as nome do relacinamento eu que escolho o nome
+      this.hasMany(models.Produtos,{foreignKey:'lojaId',
+      as:'loja',
+      onUpdate:'CASCADE',
+      onDelete:'CASCADE'})
     }
-  }
+    }
+
+    
+  
   Lojas.init({
-    nome: DataTypes.STRING
+    nome:{
+      type:DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notEmpty: {
+          msg:"Esse campo não pode ser vazio"
+        },
+      }
+    } 
   }, {
     sequelize,
     modelName: 'Lojas',

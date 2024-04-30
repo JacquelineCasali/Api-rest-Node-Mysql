@@ -8,34 +8,30 @@ const produtosControllers = {
   //criar listar imagem
   async listar(req, res) {
                //recuperar imagem do banco
-       
-      const ler = await db.Produtos.findAll({
-        //ordenar pelo nome
+       try{
+        const {lojaId}=req.params;
+        const user = await db.Lojas.findByPk( lojaId,{
+          //incluir associçao 
+          include:{association:'loja'}
+        } );
 
-        order:[['name','ASC']],
-          //obter nome da loja
-        include:[{
-          model: db.Lojas,
-          attributes: [
-            "nome"               
-          ]
-        }]
-      
-      });
-      return res.json(ler);
+        return res.json(user);
+       }catch(err){
+        console.error(err);
+return res.status(500).json({error:"Erro do Servidor Interno"})
+       }
+ 
     },
 //cadastrar
 async criar (req, res) {
     // receber dados enviados no corpo
 try{
     const { name, quantidade,lojaId} = req.body;
-
     const user = await db.Produtos.findOne({ where: { name } });
     if(user){
-      return res.status(422).send({message:`Produto ${name}já está cadastrado`});
+      return res.status(422).send({message:`Produto ${name} já está cadastrado`});
     }
-    
-  // cadastrar no banco de dados
+      // cadastrar no banco de dados
  const post= await db.Produtos.create({name, quantidade,lojaId});
       // cadastrado com sucesso
       return res.status(200).send(post);
@@ -49,13 +45,8 @@ try{
 async ler (req, res) {
       const { id } = req.params;
       try {
-        const produtos = await db.Produtos.findOne({ where: { id } ,
-          include:[{
-            model: db.Lojas,
-            attributes: [
-              "nome"               
-            ]
-          }]});
+        const produtos = await db.Produtos.findOne({ where: { id } 
+          });
 
         return res.status(200).json(produtos);
       } catch (err) {
@@ -69,12 +60,7 @@ async ler (req, res) {
            const { name, quantidade, lojaId} = req.body;
         //imagem atual no banco de dados
            const produtos = await db.Produtos.findOne({ where: { id },
-            include:[{
-              model: db.Lojas,
-              attributes: [
-                "nome"               
-              ]
-            }] });
+          });
         if (!produtos) {
           return res.status(400).json({
             message: "Produto não encontrado",

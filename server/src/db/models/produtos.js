@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Produtos.belongsTo(models.Lojas,{
+      //
+      // relacionamento de um para um
+      this.belongsTo(models.Lojas,{
 foreignKey:'lojaId',
+as:'produtos',
 onUpdate:'CASCADE',
 onDelete:'CASCADE'
       })
@@ -21,7 +23,7 @@ onDelete:'CASCADE'
   Produtos.init({
     name:{
       type: DataTypes.STRING,
-      unique:true,
+     
       allowNull: false,
       validate:{
        // nao permite campo vazio
@@ -40,9 +42,8 @@ onDelete:'CASCADE'
         },
        }
     },
-    
-    
-    lojaId:DataTypes.INTEGER,
+     
+ 
   }, {
     sequelize,
     modelName: 'Produtos',

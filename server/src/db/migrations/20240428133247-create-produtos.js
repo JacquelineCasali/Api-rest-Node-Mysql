@@ -11,7 +11,7 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        unique:true,
+    
         allowNull: false,
         validate:{
          // nao permite campo vazio
@@ -30,6 +30,18 @@ module.exports = {
           },
          }
       },
+      lojaId:{
+       type:Sequelize.INTEGER,
+       allowNull: false,
+       references:{
+         model:'Lojas',
+         key:'id'
+       },
+       onUpdate:'CASCADE',
+       onDelete:'CASCADE',
+      },
+    
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

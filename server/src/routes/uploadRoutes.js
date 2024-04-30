@@ -3,18 +3,20 @@ const produtosControllers = require("../controllers/ProdutosControllers");
 const lojaControllers = require("../controllers/lojaControllers");
 const router = express.Router();
 
-router.post('/loja',lojaControllers.criar)
-router.get('/loja',lojaControllers.listar)
+router.post('/',lojaControllers.criar)
+router.get('/',lojaControllers.listar)
     
-router.get("loja/:id", lojaControllers.ler);
- router.put('loja/:id',lojaControllers.update)
- router.delete("loja/:id",lojaControllers.delete);
- router.post('/',produtosControllers.criar)
-router.get('/',produtosControllers.listar)
+router.get('/:id', lojaControllers.ler);
+ router.put('/:id',lojaControllers.update)
+ router.delete("/:id",lojaControllers.delete);
+ 
+ 
+ router.post('/:lojaId/produto',produtosControllers.criar)
+router.get('/:lojaId/produto',produtosControllers.listar)
     
-router.get("/:id", produtosControllers.ler);
- router.put('/:id',produtosControllers.update)
- router.delete("/:id",produtosControllers.delete);
+router.get("/:lojaId/produto/:id", produtosControllers.ler);
+ router.put('/:lojaId/produto/:id',produtosControllers.update)
+ router.delete("/:lojaId/produto/:id",produtosControllers.delete);
 
 
 

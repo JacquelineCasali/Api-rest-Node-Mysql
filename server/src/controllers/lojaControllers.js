@@ -8,43 +8,53 @@ const lojaControllers = {
   //criar listar imagem
   async listar(req, res)  {
                //recuperar imagem do banco
-       
-      const ler = await db.Lojas.findAll({
-        order:[['nome','ASC']]
-      });
-      return res.json(ler);
+       try{
+        const loja = await db.Lojas.findAll({
+          order:[['nome','ASC']]
+        });
+        return res.json(loja);
+       }catch(err){
+        console.error(err);
+        return res.status(500).json({error:"Erro do Servidor Interno"})
+           
+       }
+     
     },
 //cadastrar
-criar:("/",async(req, res) => {
+ async criar (req, res){
     // receber dados enviados no corpo
 try{
     const { nome} = req.body;
-  // cadastrar no banco de dados
- const post= await db.Lojas.create({nome});
+ //verificando se o nome já existe 
+ const user = await db.Lojas.findOne({ where: { nome } });
+ if(user){
+   return res.status(422).send({message:`Nome da loja ${nome} já cadastrado`});
+ }
+ 
+ 
+    // cadastrar no banco de dados
+ const newloja= await db.Lojas.create({nome});
       // cadastrado com sucesso
-      return res.status(200).send(post);
+      return res.status(200).json(newloja);
       
       }catch(err) {
-      return res.status(400).send({err:err, message:"Email Já cadastrado"});
+      return res.status(400).send({err:err});
     }
-}),
+},
 
 
-    ler:
-    ("/:id",
-    async (req, res) => {
+  async  ler (req, res) {
       const { id } = req.params;
       try {
-        const estudante = await db.Lojas.findOne({ where: { id } });
+        const loja = await db.Lojas.findOne({ where: { id } });
 
-        return res.status(200).json(estudante);
+        return res.status(200).json(loja);
       } catch (err) {
         return res.status(400).send(err);
       }
-    }),
+    },
 
-  update:("/:id",
-    async (req, res) => {
+  async update (req, res) {
       try {
               const { id } = req.params;
            const { nome} = req.body;
@@ -52,7 +62,7 @@ try{
            const estudante = await db.Lojas.findOne({ where: { id } });
         if (!estudante) {
           return res.status(400).json({
-            message: "Estudante não encontrado",
+            message: "Loja não encontrado",
           });
         } else {
             await db.Lojas.update(
@@ -63,19 +73,17 @@ try{
 
 
           return res.status(200).json({
-            message: "Estudante atualizado com suceso!",
+            message: "Loja atualizada com suceso!",
               });
           //  return res.status(200).json(edite);
         }
       } catch (err) {
        // return res.status(400).send(err);
-        return res.status(400).send({err:err, message:"Preencha os dados Corretamente"});
+        return res.status(400).send({err:err});
       }
-    }),
+    },
   
-  delete:
-    ("/:id",
-    async (req, res) => {
+async  delete(req, res) {
       try {
         const { id } = req.params;
 
@@ -94,7 +102,7 @@ try{
       } catch (err) {
         return res.status(400).send(err);
       }
-    }),
+    },
 
 
   };
