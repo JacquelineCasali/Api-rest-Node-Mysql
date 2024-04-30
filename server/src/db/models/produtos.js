@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       // relacionamento de um para um
       this.belongsTo(models.Lojas,{
 foreignKey:'lojaId',
-as:'produtos',
+as:'loja',
 onUpdate:'CASCADE',
 onDelete:'CASCADE'
       })

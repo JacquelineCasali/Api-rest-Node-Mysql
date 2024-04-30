@@ -3,16 +3,17 @@
 const db = require("../db/models");
 
 
-const produtosControllers = {
+const enderecoControllers = {
   
   //criar listar imagem
   async listar(req, res) {
                //recuperar imagem do banco
        try{
         const {lojaId}=req.params;
-        const user = await db.Lojas.findByPk( lojaId,{
+        const user = await db.Lojas.findByPk( lojaId
+          ,{
             //incluir associçao 
-          include:{association:'produtos'},
+          include:{association:'endereco'},
           
         } );
 
@@ -27,15 +28,16 @@ return res.status(500).json({error:"Erro do Servidor Interno"})
 async criar (req, res) {
     // receber dados enviados no corpo
 try{
-    const { name, quantidade,lojaId} = req.body;
-    const user = await db.Produtos.findOne({ where: { name } });
-    if(user){
-      return res.status(422).send({message:`Produto ${name} já está cadastrado`});
+  const {lojaId}=req.params;
+  const { rua, numero,cep} = req.body;
+    const user = await db.Lojas.findByPk(lojaId)
+    if(!user){
+      return res.status(422).json({message:`Loja não encontrada`});
     }
       // cadastrar no banco de dados
- const post= await db.Produtos.create({name, quantidade,lojaId});
+ const post= await db.Enderecos.create({rua, numero,cep,lojaId});
       // cadastrado com sucesso
-      return res.status(200).send(post);
+      return res.status(200).json(post);
       
       }catch(err) {
       return res.status(400).send({err:err});
@@ -46,10 +48,10 @@ try{
 async ler (req, res) {
       const { id } = req.params;
       try {
-        const produtos = await db.Produtos.findOne({ where: { id } 
+        const endereco = await db.Enderecos.findOne({ where: { id } 
           });
 
-        return res.status(200).json(produtos);
+        return res.status(200).json(endereco);
       } catch (err) {
         return res.status(400).send(err);
       }
@@ -58,17 +60,17 @@ async ler (req, res) {
     async update(req, res) {
       try {
               const { id } = req.params;
-           const { name, quantidade, lojaId} = req.body;
+           const {rua, numero,cep,lojaId} = req.body;
         //imagem atual no banco de dados
-           const produtos = await db.Produtos.findOne({ where: { id },
+           const produtos = await db.Enderecos.findOne({ where: { id },
           });
         if (!produtos) {
           return res.status(400).json({
             message: "Produto não encontrado",
           });
         } else {
-            await db.Produtos.update(
-            { name, quantidade, lojaId},
+            await db.Enderecos.update(
+            { rua, numero,cep,lojaId},
             { where: { id } }
           );
 // // apaga o arquivo
@@ -90,13 +92,13 @@ async ler (req, res) {
       try {
         const { id } = req.params;
 
-        const rows = await db.Produtos.findOne({ where: { id } });
+        const rows = await db.Enderecos.findOne({ where: { id } });
         if (!rows) {
           return res.status(400).json({
             message: "Produto não encontrado",
           });
         } else {
-          await db.Produtos.destroy({ where: { id } });
+          await db.Enderecos.destroy({ where: { id } });
 
           return res.status(200).json({
             message: "Deletado com suceso!",
@@ -109,4 +111,4 @@ async ler (req, res) {
 
 
   };
-module.exports = produtosControllers;
+module.exports = enderecoControllers;

@@ -15,9 +15,15 @@ module.exports = (sequelize, DataTypes) => {
      // hasmany  um para muitos 
      //as nome do relacinamento eu que escolho o nome
       this.hasMany(models.Produtos,{foreignKey:'lojaId',
-      as:'loja',
+      as:'produtos',
       onUpdate:'CASCADE',
       onDelete:'CASCADE'})
+    
+      this.hasMany(models.Enderecos,{foreignKey:'lojaId',
+      as:'endereco',
+      onUpdate:'CASCADE',
+      onDelete:'CASCADE'})
+    
     }
     }
 
