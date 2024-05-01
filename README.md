@@ -1,5 +1,7 @@
 ## Projeto é uma Api Rest de Produtos
 
+
+Api com relacionamento de tabelas com 1:1 , 1:n e n:n utilizando  o sequelize e o mysql,node.js e express
 ## Imagem do Projeto 
 <!-- ![2024-04-29_065539](https://github.com/JacquelineCasali/Api-rest-Node-Mysql/assets/103325619/804310c8-0423-4473-8563-c4acfd368ab5) -->
 
