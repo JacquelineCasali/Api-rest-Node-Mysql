@@ -1,0 +1,16 @@
+1 loja possui n endereco 1:n
+1 endereco possui 1 loja 1:1
+1 loja possui n produtos
+1 produto pertence n Lojas
+
+relacionamento 
+1:1 
+1:n 
+tabela pivo n:n
+
+loja_produto nao precisa criar model
+lojaId
+produtoId
+
+
+

@@ -11,9 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //
-      // relacionamento de um para um
-      this.belongsTo(models.Lojas,{
-foreignKey:'lojaId',
+      //belongsToMany relacionamento muitos para muitos n:n
+      this.belongsToMany(models.Lojas,{
+//chave do produtos
+//through nome que vai relacionar loja com produtos (nome das tabelas com id)
+        foreignKey:'produtoId',through:'loja_produtos',
 as:'loja',
 onUpdate:'CASCADE',
 onDelete:'CASCADE'

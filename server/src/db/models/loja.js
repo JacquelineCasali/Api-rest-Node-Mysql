@@ -11,19 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
      // hasmany  um para muitos 
-     //as nome do relacinamento eu que escolho o nome
-      this.hasMany(models.Produtos,{foreignKey:'lojaId',
-      as:'produtos',
-      onUpdate:'CASCADE',
-      onDelete:'CASCADE'})
-    
       this.hasMany(models.Enderecos,{foreignKey:'lojaId',
       as:'endereco',
       onUpdate:'CASCADE',
       onDelete:'CASCADE'})
     
+      this.belongsToMany(models.Produtos,{
+        //chave do produtos
+        //through nome que vai relacionar loja com produtos (nome das tabelas com id)
+        foreignKey:'lojaId',through:'loja_produtos',
+        as:'produto',
+        onUpdate:'CASCADE',
+        onDelete:'CASCADE'
+              })
+
     }
     }
 
@@ -38,7 +40,20 @@ module.exports = (sequelize, DataTypes) => {
           msg:"Esse campo não pode ser vazio"
         },
       }
-    } 
+    } ,
+
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        isEmail:{
+          msg:"Esse campo não pode ser vazio"
+        },
+      } 
+    },
+   
+         
+
   }, {
     sequelize,
     modelName: 'Lojas',

@@ -2,32 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Lojas', {
+    await queryInterface.createTable('loja_produtos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nome: {
-        type: Sequelize.STRING,
+      lojaId:{
+        type:Sequelize.INTEGER,
         allowNull: false,
-        validate:{
-          notEmpty:{
-            msg:"Esse campo não pode ser vazio"
-          },
-        } 
-      },
-      email: {
-        type: Sequelize.STRING,
+        references:{
+          model:'Lojas',
+          key:'id'
+        },
+        onUpdate:'CASCADE',
+        onDelete:'CASCADE',
+       },
+      produtoId: {
+        type:Sequelize.INTEGER,
         allowNull: false,
-        validate:{
-          isEmail:{
-            msg:"Esse campo não pode ser vazio"
-          },
-        } 
+        references:{
+          model:'Produtos',
+          key:'id'
+        },
+        onUpdate:'CASCADE',
+        onDelete:'CASCADE',
       },
-  
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -39,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Lojas');
+    await queryInterface.dropTable('loja_produtos');
   }
 };

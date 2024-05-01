@@ -30,18 +30,7 @@ module.exports = {
           },
          }
       },
-      lojaId:{
-       type:Sequelize.INTEGER,
-       allowNull: false,
-       references:{
-         model:'Lojas',
-         key:'id'
-       },
-       onUpdate:'CASCADE',
-       onDelete:'CASCADE',
-      },
-    
-
+   
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
